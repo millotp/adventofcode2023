@@ -36,8 +36,8 @@ fn part1(input: &str) -> u64 {
 
     let mut tables = Vec::<Vec<Conversion>>::new();
     let mut currentTable = Vec::<Conversion>::new();
-    let lines = rest.split("\n");
-    for line in lines {
+
+    for line in rest.lines() {
         if line.is_empty() && !currentTable.is_empty() {
             tables.push(currentTable);
             currentTable = Vec::<Conversion>::new();
@@ -94,8 +94,8 @@ fn part2(input: &str) -> u64 {
 
     let mut tables = Vec::<Vec<Conversion>>::new();
     let mut currentTable = Vec::<Conversion>::new();
-    let lines = rest.split("\n");
-    for line in lines {
+
+    for line in rest.lines() {
         if line.is_empty() && !currentTable.is_empty() {
             tables.push(currentTable);
             currentTable = Vec::<Conversion>::new();

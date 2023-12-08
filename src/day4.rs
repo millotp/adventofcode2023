@@ -8,7 +8,7 @@ fn main() {
 
 fn part1(input: &str) -> usize {
     input
-        .split("\n")
+        .lines()
         .filter(|line| !line.is_empty())
         .map(|line| {
             let (winning, pulled) = line.split_once(":").unwrap().1.split_once("|").unwrap();
@@ -33,7 +33,7 @@ fn part1(input: &str) -> usize {
 
 fn part2(input: &str) -> usize {
     let wins = input
-        .split("\n")
+        .lines()
         .filter(|line| !line.is_empty())
         .map(|line| {
             let (winning, pulled) = line.split_once(":").unwrap().1.split_once("|").unwrap();

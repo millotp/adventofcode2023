@@ -7,7 +7,7 @@ fn main() {
 }
 
 fn part1(input: &str) -> usize {
-    let input = input.split("\r\n").collect::<Vec<&str>>();
+    let input = input.lines().collect::<Vec<&str>>();
     let mut sum = 0;
 
     for (j, line) in input.iter().enumerate() {
@@ -54,7 +54,7 @@ fn part1(input: &str) -> usize {
 }
 
 fn part2(input: &str) -> usize {
-    let input = input.split("\r\n").collect::<Vec<&str>>();
+    let input = input.lines().collect::<Vec<&str>>();
     let mut grid = Vec::new();
 
     for (j, line) in input.iter().enumerate() {

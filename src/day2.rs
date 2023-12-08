@@ -8,7 +8,7 @@ fn main() {
 
 fn part1(input: &str) -> usize {
     input
-        .split("\r\n")
+        .lines()
         .enumerate()
         .map(|(index, line)| -> usize {
             let game = line.splitn(2, ": ").nth(1).unwrap();
@@ -36,7 +36,7 @@ fn part1(input: &str) -> usize {
 
 fn part2(input: &str) -> usize {
     input
-        .split("\r\n")
+        .lines()
         .map(|line| -> usize {
             let game = line.splitn(2, ": ").nth(1).unwrap();
             let draws = game.split("; ").collect::<Vec<&str>>();

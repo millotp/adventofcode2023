@@ -8,7 +8,7 @@ fn main() {
 
 fn part1(input: &str) -> usize {
     input
-        .split("\n")
+        .lines()
         .map(|line| -> usize {
             (line.chars().find(|c| c.is_numeric()).unwrap_or('0') as usize - '0' as usize) * 10
                 + (line.chars().rev().find(|c| c.is_numeric()).unwrap_or('0') as usize
@@ -19,7 +19,7 @@ fn part1(input: &str) -> usize {
 
 fn part2(input: &str) -> usize {
     input
-        .split("\n")
+        .lines()
         .map(|line| -> usize { (get_first_number(line) * 10) + get_last_number(line) })
         .sum()
 }
