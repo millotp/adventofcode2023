@@ -29,7 +29,7 @@ fn part1(input: &str) -> u64 {
         .split_once(":")
         .unwrap()
         .1
-        .split(" ")
+        .split(' ')
         .filter(|s| !s.is_empty())
         .map(|s| s.parse::<u64>().unwrap())
         .collect::<Vec<u64>>();
@@ -49,7 +49,7 @@ fn part1(input: &str) -> u64 {
         }
 
         let nums = line
-            .split(" ")
+            .split(' ')
             .filter(|s| !s.is_empty())
             .map(|s| s.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();
@@ -87,7 +87,7 @@ fn part2(input: &str) -> u64 {
         .split_once(":")
         .unwrap()
         .1
-        .split(" ")
+        .split(' ')
         .filter(|s| !s.is_empty())
         .map(|s| s.parse::<u64>().unwrap())
         .collect::<Vec<u64>>();
@@ -107,7 +107,7 @@ fn part2(input: &str) -> u64 {
         }
 
         let nums = line
-            .split(" ")
+            .split(' ')
             .filter(|s| !s.is_empty())
             .map(|s| s.parse::<u64>().unwrap())
             .collect::<Vec<u64>>();

@@ -13,12 +13,12 @@ fn part1(input: &str) -> usize {
         .map(|line| {
             let (winning, pulled) = line.split_once(":").unwrap().1.split_once("|").unwrap();
             let winning_set = winning
-                .split(" ")
+                .split(' ')
                 .filter(|num| !num.is_empty())
                 .collect::<HashSet<&str>>();
 
             let wins = pulled
-                .split(" ")
+                .split(' ')
                 .filter(|num| winning_set.contains(num))
                 .count();
 
@@ -38,12 +38,12 @@ fn part2(input: &str) -> usize {
         .map(|line| {
             let (winning, pulled) = line.split_once(":").unwrap().1.split_once("|").unwrap();
             let winning_set = winning
-                .split(" ")
+                .split(' ')
                 .filter(|num| !num.is_empty())
                 .collect::<HashSet<&str>>();
 
             pulled
-                .split(" ")
+                .split(' ')
                 .filter(|num| winning_set.contains(num))
                 .count()
         })

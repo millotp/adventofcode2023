@@ -15,7 +15,7 @@ fn part1(input: &str) -> usize {
             let draws = game.split("; ").collect::<Vec<&str>>();
             if draws.iter().all(|draw| {
                 let mut gems = draw.split(", ").map(|gem| {
-                    let cubes = gem.split(" ").collect::<Vec<&str>>();
+                    let cubes = gem.split(' ').collect::<Vec<&str>>();
                     (cubes[0].parse::<usize>().unwrap(), cubes[1])
                 });
 
@@ -47,7 +47,7 @@ fn part2(input: &str) -> usize {
 
             draws.iter().for_each(|draw| {
                 let gems = draw.split(", ").map(|gem| {
-                    let cubes = gem.split(" ").collect::<Vec<&str>>();
+                    let cubes = gem.split(' ').collect::<Vec<&str>>();
                     (cubes[0].parse::<usize>().unwrap(), cubes[1])
                 });
 

@@ -12,7 +12,7 @@ fn part1(input: &str) -> u64 {
         .split_once(":")
         .unwrap()
         .1
-        .split(" ")
+        .split(' ')
         .filter(|s| !s.is_empty())
         .map(|s| s.parse::<f64>().unwrap())
         .collect::<Vec<_>>();
@@ -21,7 +21,7 @@ fn part1(input: &str) -> u64 {
         .unwrap()
         .1
         .replace("\n", "")
-        .split(" ")
+        .split(' ')
         .filter(|s| !s.is_empty())
         .map(|s| s.parse::<f64>().unwrap() + 1.0)
         .collect::<Vec<_>>();
