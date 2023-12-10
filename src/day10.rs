@@ -14,6 +14,7 @@ type Fence = Vec<Point>;
 
 fn get_loop(input: &str) -> (Vec<Vec<(char, [bool; 4])>>, Fence, Fence) {
     let symbols = HashMap::from([
+        // North, East, South, West
         ('|', [true, false, true, false]),
         ('-', [false, true, false, true]),
         ('L', [true, true, false, false]),
@@ -56,13 +57,7 @@ fn get_loop(input: &str) -> (Vec<Vec<(char, [bool; 4])>>, Fence, Fence) {
     let mut curr = start_pos;
     let mut fence = Vec::new();
     let mut poly = Vec::new();
-    let mut dir = pipes[curr.1][curr.0]
-        .1
-        .iter()
-        .enumerate()
-        .find(|(_, &v)| v)
-        .unwrap()
-        .0;
+    let mut dir = pipes[curr.1][curr.0].1.iter().position(|v| *v).unwrap();
     while fence.is_empty() || curr != start_pos {
         match dir {
             0 => curr.1 -= 1,
