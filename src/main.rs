@@ -1,74 +1,116 @@
 use std::fs;
 
 fn main() {
-    let input = fs::read_to_string("inputs/day11.txt").unwrap();
+    let input = fs::read_to_string("inputs/day12.txt").unwrap();
     println!("Part 1: {}", part1(&input));
     println!("Part 2: {}", part2(&input));
 }
 
-fn get_common(input: &str, expansion: i32) -> u64 {
-    let grid = input
-        .lines()
-        .map(|l| l.chars().map(|c| c == '#').collect::<Vec<_>>())
-        .collect::<Vec<Vec<_>>>();
-
-    let expand_y = grid
-        .iter()
-        .map(|r| !r.iter().any(|&c| c))
-        .collect::<Vec<_>>();
-
-    let mut expand_x = Vec::new();
-    for i in 0..grid[0].len() {
-        let mut have_galaxy = false;
-        for row in grid.iter() {
-            if row[i] {
-                have_galaxy = true;
+fn is_valid(ini: &str, arran: &[i32]) -> bool {
+    let mut group = 0;
+    let mut current_match = 0;
+    for j in ini.chars() {
+        if j == '#' {
+            group += 1;
+        } else if group > 0 {
+            if current_match < arran.len() && group == arran[current_match] {
+                current_match += 1;
+            } else {
                 break;
             }
-        }
-        expand_x.push(!have_galaxy);
-    }
-
-    let galaxies = grid
-        .iter()
-        .enumerate()
-        .flat_map(|(j, r)| {
-            r.iter()
-                .enumerate()
-                .filter(|(_, &c)| c)
-                .map(|(i, _)| (i as i32, j as i32))
-                .collect::<Vec<_>>()
-        })
-        .collect::<Vec<_>>();
-
-    let mut dist = 0;
-    for i in 0..(galaxies.len() - 1) {
-        for j in i + 1..galaxies.len() {
-            let (x1, y1) = galaxies[i];
-            let (x2, y2) = galaxies[j];
-            let mut dx = (x1 - x2).abs();
-            let mut dy = (y1 - y2).abs();
-            for k in 0..=dx {
-                if expand_x[(x1.min(x2) + k) as usize] {
-                    dx += expansion;
-                }
-            }
-            for k in 0..=dy {
-                if expand_y[(y1.min(y2) + k) as usize] {
-                    dy += expansion;
-                }
-            }
-            dist += dx as u64 + dy as u64;
+            group = 0;
         }
     }
 
-    dist
+    current_match == arran.len()
+        || (current_match == arran.len() - 1 && group == arran[current_match])
 }
 
 fn part1(input: &str) -> u64 {
-    get_common(input, 1)
+    input
+        .lines()
+        .map(|l| {
+            let (ini, arran) = l.split_once(" ").unwrap();
+            let arran = arran
+                .split(",")
+                .map(|c| c.parse::<i32>().unwrap())
+                .collect::<Vec<_>>();
+            let damaged_count = ini.chars().filter(|&c| c == '#').count();
+            let total_target = arran.iter().sum::<i32>() - damaged_count as i32;
+            let missing = ini.chars().filter(|&c| c == '?').count();
+
+            let mut matches = 0;
+
+            for i in 0..2usize.pow(missing as u32) {
+                if i.count_ones() as i32 != total_target {
+                    continue;
+                }
+
+                let mut combi = String::with_capacity(ini.len());
+                let mut k = 0;
+                for c in ini.chars() {
+                    if c == '?' {
+                        if i & (1 << k) > 0 {
+                            combi.push('#');
+                        } else {
+                            combi.push('.');
+                        }
+                        k += 1;
+                    } else {
+                        combi.push(c);
+                    }
+                }
+
+                if is_valid(&combi, &arran) {
+                    matches += 1;
+                }
+            }
+
+            matches as u64
+        })
+        .sum()
 }
 
 fn part2(input: &str) -> u64 {
-    get_common(input, 999999)
+    let mut lines = Vec::new();
+    let (mut currIni, mut currArran) = (Vec::new(), Vec::new());
+    let mut count = 0;
+    for l in input.lines() {
+        let (ini, arran) = l.split_once(" ").unwrap();
+        currIni.push(ini);
+        currArran.push(arran);
+        count += 1;
+        if count == 5 {
+            lines.push(format!("{} {}", currIni.join("?"), currArran.join(",")));
+            currIni.clear();
+            currArran.clear();
+            count = 0;
+        }
+    }
+
+    lines
+        .iter()
+        .map(|l| {
+            let (ini, arran) = l.split_once(" ").unwrap();
+            let arran = arran
+                .split(",")
+                .map(|c| c.parse::<i32>().unwrap())
+                .collect::<Vec<_>>();
+
+            let (ini, arran) = l.split_once(" ").unwrap();
+            let arran = arran
+                .split(",")
+                .map(|c| c.parse::<i32>().unwrap())
+                .collect::<Vec<_>>();
+            let damaged_count = ini.chars().filter(|&c| c == '#').count();
+            let total_target = arran.iter().sum::<i32>() - damaged_count as i32;
+            let missing = ini.chars().filter(|&c| c == '?').count();
+
+            let mut matches = 0;
+
+            println!("{}", 2usize.pow(missing as u32));
+
+            0
+        })
+        .sum()
 }
